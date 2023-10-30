@@ -30,9 +30,9 @@ except Exception:
 #sometimes jupyter doesnt initialize MathJax automatically for latex, so do this
 
 try:
-    LFI_PIVOT_BASE = os.environ['LFI_PIVOT_BASE']
-    print('BASE directoy properly set = ', LFI_PIVOT_BASE)
-    utils_dir = os.path.join(LFI_PIVOT_BASE, 'utils')
+    ALFFI = os.environ['ALFFI']
+    print('BASE directoy properly set = ', ALFFI)
+    utils_dir = os.path.join(ALFFI, 'utils')
     sys.path.append(utils_dir)
     import utils
     #usually its not recommended to import everything from a module, but we know
@@ -49,7 +49,7 @@ FONTSIZE=18
 font = {'family': 'serif', 'weight':'normal', 'size':FONTSIZE}
 mp.rc('font', **font)
 mp.rc('text',usetex=True)
-DATA_DIR = os.path.join(LFI_PIVOT_BASE,'data')
+DATA_DIR = os.path.join(ALFFI,'data')
 memory = Memory(DATA_DIR)
 
 def debug(func):
@@ -234,7 +234,7 @@ def generate_training_data_2d(Bprime, MLE, save_data=False):
     data_2_param = {'Z' : Z, 'theta' : theta, 'nu': nu, 'theta_hat': theta_hat_, 'N':N, 'M':M}
 
     data_2_param = pd.DataFrame.from_dict(data_2_param)
-    PATH = os.path.join(LFI_PIVOT_BASE, 
+    PATH = os.path.join(ALFFI, 
                         'data',
                         'TWO_PARAMETERS_theta_%s_%s_%sk_Examples_MLE_%s.csv' % (str(thetaMin), str(thetaMax), str(int(Bprime/1000)), str(MLE)) )
     if save_data:
@@ -300,7 +300,7 @@ def load_2d_train_df(MLE, with_lambda_D, small_df=True):
         USECOLS=['theta', 'nu', 'N', 'M']
         DF_NAME='TWO_PARAMETERS_WITH_LAMBDA_D_theta_0_20_30000k_Examples_MLE_False.csv'
         print('are you sure you want to use NM dataframe?')
-    data_path=os.path.join(LFI_PIVOT_BASE, 
+    data_path=os.path.join(ALFFI, 
                     'data', DF_NAME)
         
     train_df = pd.read_csv(data_path, 
@@ -549,7 +549,7 @@ def load_trained_model(PATH, PARAMS):
 
 def save_model(model, PARAMS, pth_string):
     """pth string is the name of the pth file which is a dictionary of dictionaries"""
-    models_path = os.path.join(LFI_PIVOT_BASE, 'models')
+    models_path = os.path.join(ALFFI, 'models')
     PATH=os.path.join(models_path, pth_string)
     print(f'saving model with th string : {pth_string}\n')
     torch.save({'PARAMS': PARAMS,
@@ -559,7 +559,7 @@ def save_model(model, PARAMS, pth_string):
     
 
 def load_model(model, PARAMS, pth_string):
-    models_path = os.path.join(LFI_PIVOT_BASE, 'models')
+    models_path = os.path.join(ALFFI, 'models')
     PATH=os.path.join(models_path, pth_string)
     model = RegularizedRegressionModel(
         nfeatures=PARAMS['NFEATURES'],
@@ -763,7 +763,8 @@ def plot_coverage_levels(PARAMS, with_lambda_D, Npoints, saveplot=False):
     plt.tight_layout()    
             
     if saveplot==True:
-        plt.savefig(os.path.join(os.environ['LFI_PIVOT_BASE'], 'images', 'JUNE_6_ON_OFF_coverage_at_0.68_0.8_0.9_0.95_500_POINTS.eps'))
+        plt.savefig(os.path.join(os.environ['ALFFI'], 
+                                 'images', 'JUNE_6_ON_OFF_coverage_at_0.68_0.8_0.9_0.95_500_POINTS.pdf'))
     fig.show(); plt.show()
         
             
