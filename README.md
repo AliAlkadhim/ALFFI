@@ -17,7 +17,7 @@ conda env create -n ALFFI -f ALFFI_env.yml && conda activate ALFFI
 2) Or, using the stanard python environment (`pip`) and the `requirements.txt` file.
 
 ```
-pip install -r requirements.
+pip install -r requirements
 ```
 
 
