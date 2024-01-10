@@ -53,7 +53,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 24,
+   "execution_count": 1,
    "metadata": {
     "id": "FA1Y5VCv20XZ"
    },
@@ -89,7 +89,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 25,
+   "execution_count": 2,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -119,7 +119,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 26,
+   "execution_count": 3,
    "metadata": {},
    "outputs": [
     {
@@ -170,14 +170,14 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 22,
+   "execution_count": 4,
    "metadata": {},
    "outputs": [
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "SIR_dnn_cdf_800K.py\r\n"
+      "__pycache__  SIR_dnn_cdf_100k.py  SIR_dnn_cdf_800K.py  SIR_dnn_quantile.py\r\n"
      ]
     }
    ],
@@ -187,7 +187,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 27,
+   "execution_count": 5,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -196,7 +196,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 30,
+   "execution_count": 6,
    "metadata": {},
    "outputs": [
     {
@@ -204,9 +204,9 @@
      "output_type": "stream",
      "text": [
       "\r\n",
-      "name     = 'SIR_dnn_cdf_800K'\r\n",
-      "features = ['lo', 'alpha', 'beta']\r\n",
-      "target   = 'Zo'\r\n",
+      "name     = 'SIR_dnn_quantile'\r\n",
+      "features = ['alpha', 'beta', 'tau']\r\n",
+      "target   = 'lo'\r\n",
       "nodes    = 25\r\n",
       "\r\n",
       "import torch\r\n",
@@ -230,26 +230,25 @@
       "                      nn.Linear(nodes, nodes),\r\n",
       "                      nn.ReLU(),                    \r\n",
       "                      \r\n",
-      "                      nn.Linear(nodes, 1), \r\n",
-      "                      nn.Sigmoid()) \r\n"
+      "                      nn.Linear(nodes, 1)\r\n",
+      "                     ) \r\n"
      ]
     }
    ],
    "source": [
-    "! cat ../models/SIR_dnn_cdf_800K.py"
+    "! cat ../models/SIR_dnn_quantile.py"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 34,
+   "execution_count": 27,
    "metadata": {},
    "outputs": [
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "['lo', 'alpha', 'beta']\n",
-      "Name:  SIR_dnn_cdf_800K\n",
+      "Name:  SIR_dnn_quantile\n",
       "Model:\n",
       "Sequential(\n",
       "  (0): Linear(in_features=3, out_features=25, bias=True)\n",
@@ -265,68 +264,34 @@
       "  (10): Linear(in_features=25, out_features=25, bias=True)\n",
       "  (11): ReLU()\n",
       "  (12): Linear(in_features=25, out_features=1, bias=True)\n",
-      "  (13): Sigmoid()\n",
       ")\n",
-      "load: SIR_dnn_cdf_800K.dict\n"
-     ]
-    },
-    {
-     "ename": "FileNotFoundError",
-     "evalue": "[Errno 2] No such file or directory: 'SIR_dnn_cdf_800K.dict'",
-     "output_type": "error",
-     "traceback": [
-      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
-      "\u001b[0;31mFileNotFoundError\u001b[0m                         Traceback (most recent call last)",
-      "\u001b[0;32m/tmp/ipykernel_695/835095862.py\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[1;32m     35\u001b[0m \u001b[0mmodelfile\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m'%s.dict'\u001b[0m \u001b[0;34m%\u001b[0m \u001b[0mname\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     36\u001b[0m \u001b[0mprint\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m'load:'\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mmodelfile\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 37\u001b[0;31m \u001b[0mmodel\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mload_state_dict\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mtorch\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mload\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mmodelfile\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     38\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     39\u001b[0m \u001b[0;32mdef\u001b[0m \u001b[0mcdf\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0ml\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0malpha\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mbeta\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;32m/cvmfs/sft.cern.ch/lcg/views/LCG_104a_swan/x86_64-centos7-gcc11-opt/lib/python3.9/site-packages/torch/serialization.py\u001b[0m in \u001b[0;36mload\u001b[0;34m(f, map_location, pickle_module, weights_only, **pickle_load_args)\u001b[0m\n\u001b[1;32m    789\u001b[0m         \u001b[0mpickle_load_args\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;34m'encoding'\u001b[0m\u001b[0;34m]\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m'utf-8'\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    790\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 791\u001b[0;31m     \u001b[0;32mwith\u001b[0m \u001b[0m_open_file_like\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mf\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m'rb'\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;32mas\u001b[0m \u001b[0mopened_file\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    792\u001b[0m         \u001b[0;32mif\u001b[0m \u001b[0m_is_zipfile\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mopened_file\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    793\u001b[0m             \u001b[0;31m# The zipfile reader is going to advance the current file position.\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;32m/cvmfs/sft.cern.ch/lcg/views/LCG_104a_swan/x86_64-centos7-gcc11-opt/lib/python3.9/site-packages/torch/serialization.py\u001b[0m in \u001b[0;36m_open_file_like\u001b[0;34m(name_or_buffer, mode)\u001b[0m\n\u001b[1;32m    269\u001b[0m \u001b[0;32mdef\u001b[0m \u001b[0m_open_file_like\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mname_or_buffer\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mmode\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    270\u001b[0m     \u001b[0;32mif\u001b[0m \u001b[0m_is_path\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mname_or_buffer\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 271\u001b[0;31m         \u001b[0;32mreturn\u001b[0m \u001b[0m_open_file\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mname_or_buffer\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mmode\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    272\u001b[0m     \u001b[0;32melse\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    273\u001b[0m         \u001b[0;32mif\u001b[0m \u001b[0;34m'w'\u001b[0m \u001b[0;32min\u001b[0m \u001b[0mmode\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;32m/cvmfs/sft.cern.ch/lcg/views/LCG_104a_swan/x86_64-centos7-gcc11-opt/lib/python3.9/site-packages/torch/serialization.py\u001b[0m in \u001b[0;36m__init__\u001b[0;34m(self, name, mode)\u001b[0m\n\u001b[1;32m    250\u001b[0m \u001b[0;32mclass\u001b[0m \u001b[0m_open_file\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0m_opener\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    251\u001b[0m     \u001b[0;32mdef\u001b[0m \u001b[0m__init__\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mname\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mmode\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 252\u001b[0;31m         \u001b[0msuper\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m__init__\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mopen\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mname\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mmode\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    253\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    254\u001b[0m     \u001b[0;32mdef\u001b[0m \u001b[0m__exit__\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m*\u001b[0m\u001b[0margs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;31mFileNotFoundError\u001b[0m: [Errno 2] No such file or directory: 'SIR_dnn_cdf_800K.dict'"
+      "['alpha', 'beta', 'tau']\n",
+      "load: SIR_dnn_quantile.dict\n"
      ]
     }
    ],
    "source": [
+    "import models.SIR_dnn_quantile as NN\n",
+    "importlib.reload(NN)\n",
     "\n",
     "fold  = ''\n",
-    "name  = 'SIR_dnn_cdf_800K'\n",
+    "name  = NN.name\n",
+    "model = NN.model\n",
     "\n",
-    "features = ['lo', 'alpha', 'beta']\n",
-    "target   = 'Zo'\n",
-    "nodes    = 25\n",
-    "\n",
-    "model = nn.Sequential(nn.Linear( len(features), nodes),\n",
-    "                      nn.ReLU(),\n",
-    "                      \n",
-    "                      nn.Linear(nodes, nodes),\n",
-    "                      nn.ReLU(),\n",
-    "                      \n",
-    "                      nn.Linear(nodes, nodes),\n",
-    "                      nn.ReLU(), \n",
-    "                      \n",
-    "                      nn.Linear(nodes, nodes),\n",
-    "                      nn.ReLU(),                    \n",
-    "                      \n",
-    "                      nn.Linear(nodes, nodes),\n",
-    "                      nn.ReLU(), \n",
-    "                      \n",
-    "                      nn.Linear(nodes, nodes),\n",
-    "                      nn.ReLU(),                    \n",
-    "                      \n",
-    "                      nn.Linear(nodes, 1), \n",
-    "                      nn.Sigmoid()) \n",
-    "\n",
-    "\n",
-    "print(features)\n",
     "print('Name: ', name)\n",
     "print('Model:')\n",
     "print(model)\n",
+    "print(NN.features)\n",
     "\n",
     "modelfile = '%s.dict' % name\n",
     "print('load:', modelfile)\n",
     "model.load_state_dict(torch.load(modelfile))\n",
     "\n",
-    "def cdf(l, alpha, beta):\n",
-    "    X = np.array([l, alpha, beta]).T\n",
+    "def quantile(alpha, beta, tau):\n",
+    "    if type(tau)==type(float()):\n",
+    "        tau=np.full_like(alpha, tau)\n",
+    "    \n",
+    "    X = np.array([alpha, beta, tau]).T\n",
     "    inputs = torch.Tensor(X)\n",
     "    # go to evaluation mode\n",
     "    model.eval()\n",
@@ -340,6 +305,27 @@
    ]
   },
   {
+   "cell_type": "code",
+   "execution_count": 24,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "float"
+      ]
+     },
+     "execution_count": 24,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "x=np.array(0.8)\n",
+    "type(0.6)"
+   ]
+  },
+  {
    "cell_type": "markdown",
    "metadata": {},
    "source": [
@@ -349,7 +335,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 10,
+   "execution_count": 11,
    "metadata": {},
    "outputs": [
     {
@@ -422,7 +408,7 @@
        "4  0.499624  0.354600  [0.08851203191960628, 0.02607256422172975, 0.0..."
       ]
      },
-     "execution_count": 10,
+     "execution_count": 11,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -434,7 +420,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 11,
+   "execution_count": 12,
    "metadata": {},
    "outputs": [
     {
@@ -515,7 +501,7 @@
        "4  0.499624  0.354600  [0.08851203191960628, 0.02607256422172975, 0.0..."
       ]
      },
-     "execution_count": 11,
+     "execution_count": 12,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -533,7 +519,68 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 22,
+   "execution_count": 29,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[0.32738888 0.30798012 0.47403556 0.26450205 0.35403538 0.3067005\n",
+      " 0.6147465  0.2767694  0.26804036 0.25250253 0.362931   0.27860844\n",
+      " 0.26901132 0.26572424 0.49693024 0.4098422  0.2701056  0.34974343\n",
+      " 0.25987715 0.6653115  0.2684727  0.25653866 0.3337637  0.28991503\n",
+      " 0.3733221  0.27588126 0.50700927 0.34153625 0.30959153 0.2656213\n",
+      " 0.6493085  0.27193597 0.4794122  0.31034422 0.26891783 0.43272376\n",
+      " 0.5426643  0.26556477 0.4577725  0.27286384 0.2709336  0.29472515\n",
+      " 0.3851697  0.2612975  0.48755133 0.5233234  0.55963963 0.31487012\n",
+      " 0.34905183 0.26580435 0.33105218 0.46587527 0.37860373 0.48071182\n",
+      " 0.26981875 0.2644761  0.2707827  0.46150655 0.38068467 0.60120744\n",
+      " 0.2585337  0.26936772 0.29950792 0.32293588 0.29399315 0.37145853\n",
+      " 0.25637686 0.2512547  0.36813015 0.47343892 0.26535308 0.2870474\n",
+      " 0.44767404 0.6307322  0.33066022 0.25540647 0.26446575 0.5051019\n",
+      " 0.36453617 0.48001695 0.2894218  0.3313372  0.4729033  0.2722243\n",
+      " 0.64508665 0.34812427 0.41767114 0.27251604 0.291138   0.25396386\n",
+      " 0.5210545  0.5660892  0.40943897 0.2972703  0.5339506  0.49258548\n",
+      " 0.2802537  0.4769544  0.38970584 0.36398453 0.2666602  0.36837822\n",
+      " 0.28190136 0.2900618  0.29833618 0.42337978 0.3981018  0.42371923\n",
+      " 0.25952017 0.363558   0.44774592 0.322567   0.42409486 0.33128524\n",
+      " 0.49318558 0.30061287 0.5451324  0.29255322 0.25868082 0.6894994\n",
+      " 0.28124678 0.40693825 0.27462855 0.25860608 0.41606092 0.27044308\n",
+      " 0.2943793  0.27814212 0.29922655 0.31766057 0.34054863 0.2595822\n",
+      " 0.28681985 0.25326315 0.28648135 0.28397012 0.588354   0.2577722\n",
+      " 0.37647438 0.6048436  0.26897258 0.33686537 0.31505007 0.3584832\n",
+      " 0.29142457 0.6538155  0.34631473 0.56347966 0.27220687 0.27087173\n",
+      " 0.41656202 0.26730394 0.25857067 0.3665746  0.59350187 0.26279074\n",
+      " 0.26305714 0.25206238 0.324044   0.31012842 0.4820032  0.5780664\n",
+      " 0.2826692  0.27548057 0.4273765  0.30695978 0.67538196 0.30270994\n",
+      " 0.33083326 0.3401376  0.27436674 0.26382262 0.26165196 0.26175895\n",
+      " 0.30738714 0.44295752 0.297674   0.32917553 0.303522   0.25843987\n",
+      " 0.27166253 0.26375598 0.2926669  0.29778463 0.25771728 0.30014145\n",
+      " 0.25596792 0.40039238 0.33280435 0.304451   0.260828   0.27001026\n",
+      " 0.26653394 0.2792406  0.2848345  0.5859644  0.26772025 0.26314092\n",
+      " 0.2997515  0.31863183 0.25355735 0.33020103 0.5316573  0.2555383\n",
+      " 0.26034856 0.44137877 0.48575455 0.37515473 0.28123593 0.4598332\n",
+      " 0.6373749  0.25959566 0.26942474 0.28707704 0.2715236  0.28635156\n",
+      " 0.38966697 0.26486224 0.3608175  0.36369857 0.5313264  0.27616757\n",
+      " 0.29768115 0.36147773 0.62517303 0.28575554 0.3273412  0.26213437\n",
+      " 0.41848332 0.26730257 0.26050356 0.27852044 0.438677   0.44647115\n",
+      " 0.62626714 0.26605126 0.27506202 0.2573622  0.35027242 0.32235175\n",
+      " 0.3599807  0.5293171  0.5362208  0.25570595 0.25511757 0.45500177\n",
+      " 0.4872691  0.32820854 0.2686531 ]\n",
+      "(249,)\n"
+     ]
+    }
+   ],
+   "source": [
+    "q=quantile(alpha, beta, 0.68)\n",
+    "print(q)\n",
+    "print(q.shape)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 30,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -546,28 +593,24 @@
     "    for j, x, y in zip(range(N), alpha, beta):\n",
     "        x = np.full((K), x)\n",
     "        y = np.full((K), y)\n",
-    "        p = cdf(l[j], x, y)\n",
+    "        c = quantile(x, y, tau)\n",
     "\n",
     "        # compute coverage\n",
-    "        cov[j]  = np.mean(p <= tau)\n",
+    "        cov[j]  = np.mean(l[j] <= c)\n",
     "        ecov[j] = np.sqrt(cov[j]*(1 - cov[j])/K)\n",
     "    return cov, ecov"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 24,
+   "execution_count": null,
    "metadata": {},
    "outputs": [
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "0.683\n",
-      "0.8\n",
-      "0.9\n",
-      "0.95\n",
-      "done!\n"
+      "0.683\n"
      ]
     }
    ],

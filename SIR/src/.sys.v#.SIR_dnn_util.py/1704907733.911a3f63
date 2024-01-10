@@ -82,8 +82,8 @@ def validate(model, avloss, inputs, targets):
     model.eval() # evaluation mode
     
     with torch.no_grad(): # no need to compute gradients wrt. x and t
-        x = torch.from_numpy(inputs).float().to(device)
-        t = torch.from_numpy(targets).float().to(device)
+        x = torch.from_numpy(inputs).float()
+        t = torch.from_numpy(targets).float()
         # remember to reshape!
         o = model(x).reshape(t.shape)
     return avloss(o, t, x)
@@ -188,8 +188,8 @@ def train(model, optimizer, dictfile, early_stopping_count,
         # with respect to x and t, we disable this feature
         with torch.no_grad(): # no need to compute gradients 
             # wrt. x and t
-            x = torch.from_numpy(batch_x).float().to(device)
-            t = torch.from_numpy(batch_t).float().to(device)
+            x = torch.from_numpy(batch_x).float()
+            t = torch.from_numpy(batch_t).float()      
             #x.to(device)
             #t.to(device)
             
@@ -200,7 +200,7 @@ def train(model, optimizer, dictfile, early_stopping_count,
         # In order for the tensor operations with outputs and t
         # to work correctly, it is necessary that they have the
         # same shape. We can do this with the reshape method.
-        outputs = model(x).reshape(t.shape)#.to(device)
+        outputs = model(x).reshape(t.shape)
         #outputs.to(device)
                
         # compute a noisy approximation to the average loss
@@ -217,9 +217,8 @@ def train(model, optimizer, dictfile, early_stopping_count,
         
         if ii % step == 0:
             
-            acc_t = validate(model, avloss, train_x[:n], train_t[:n]).item() 
-            acc_v = validate(model, avloss, valid_x[:n], valid_t[:n]).item()
-            print(f'\r{ii}',end='')
+            acc_t = validate(model, avloss, train_x[:n], train_t[:n]) 
+            acc_v = validate(model, avloss, valid_x[:n], valid_t[:n])
 
             if acc_v < min_acc_v:
                 min_acc_v = acc_v

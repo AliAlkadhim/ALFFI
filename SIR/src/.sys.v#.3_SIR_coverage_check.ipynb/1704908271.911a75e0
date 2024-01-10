@@ -53,7 +53,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 24,
+   "execution_count": 1,
    "metadata": {
     "id": "FA1Y5VCv20XZ"
    },
@@ -89,7 +89,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 25,
+   "execution_count": 2,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -119,7 +119,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 26,
+   "execution_count": 16,
    "metadata": {},
    "outputs": [
     {
@@ -170,7 +170,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 22,
+   "execution_count": 11,
    "metadata": {},
    "outputs": [
     {
@@ -187,139 +187,34 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 27,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "sys.path.append('../models')"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 30,
+   "execution_count": 15,
    "metadata": {},
    "outputs": [
     {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "\r\n",
-      "name     = 'SIR_dnn_cdf_800K'\r\n",
-      "features = ['lo', 'alpha', 'beta']\r\n",
-      "target   = 'Zo'\r\n",
-      "nodes    = 25\r\n",
-      "\r\n",
-      "import torch\r\n",
-      "import torch.nn as nn\r\n",
-      "\r\n",
-      "model = nn.Sequential(nn.Linear( len(features), nodes),\r\n",
-      "                      nn.ReLU(),\r\n",
-      "                      \r\n",
-      "                      nn.Linear(nodes, nodes),\r\n",
-      "                      nn.ReLU(),\r\n",
-      "                      \r\n",
-      "                      nn.Linear(nodes, nodes),\r\n",
-      "                      nn.ReLU(), \r\n",
-      "                      \r\n",
-      "                      nn.Linear(nodes, nodes),\r\n",
-      "                      nn.ReLU(),                    \r\n",
-      "                      \r\n",
-      "                      nn.Linear(nodes, nodes),\r\n",
-      "                      nn.ReLU(), \r\n",
-      "                      \r\n",
-      "                      nn.Linear(nodes, nodes),\r\n",
-      "                      nn.ReLU(),                    \r\n",
-      "                      \r\n",
-      "                      nn.Linear(nodes, 1), \r\n",
-      "                      nn.Sigmoid()) \r\n"
-     ]
-    }
-   ],
-   "source": [
-    "! cat ../models/SIR_dnn_cdf_800K.py"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 34,
-   "metadata": {},
-   "outputs": [
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "['lo', 'alpha', 'beta']\n",
-      "Name:  SIR_dnn_cdf_800K\n",
-      "Model:\n",
-      "Sequential(\n",
-      "  (0): Linear(in_features=3, out_features=25, bias=True)\n",
-      "  (1): ReLU()\n",
-      "  (2): Linear(in_features=25, out_features=25, bias=True)\n",
-      "  (3): ReLU()\n",
-      "  (4): Linear(in_features=25, out_features=25, bias=True)\n",
-      "  (5): ReLU()\n",
-      "  (6): Linear(in_features=25, out_features=25, bias=True)\n",
-      "  (7): ReLU()\n",
-      "  (8): Linear(in_features=25, out_features=25, bias=True)\n",
-      "  (9): ReLU()\n",
-      "  (10): Linear(in_features=25, out_features=25, bias=True)\n",
-      "  (11): ReLU()\n",
-      "  (12): Linear(in_features=25, out_features=1, bias=True)\n",
-      "  (13): Sigmoid()\n",
-      ")\n",
-      "load: SIR_dnn_cdf_800K.dict\n"
-     ]
-    },
-    {
-     "ename": "FileNotFoundError",
-     "evalue": "[Errno 2] No such file or directory: 'SIR_dnn_cdf_800K.dict'",
+     "ename": "ModuleNotFoundError",
+     "evalue": "No module named 'models.SIR_dnn_cdf_800k'",
      "output_type": "error",
      "traceback": [
       "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
-      "\u001b[0;31mFileNotFoundError\u001b[0m                         Traceback (most recent call last)",
-      "\u001b[0;32m/tmp/ipykernel_695/835095862.py\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[1;32m     35\u001b[0m \u001b[0mmodelfile\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m'%s.dict'\u001b[0m \u001b[0;34m%\u001b[0m \u001b[0mname\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     36\u001b[0m \u001b[0mprint\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m'load:'\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mmodelfile\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 37\u001b[0;31m \u001b[0mmodel\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mload_state_dict\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mtorch\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mload\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mmodelfile\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     38\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     39\u001b[0m \u001b[0;32mdef\u001b[0m \u001b[0mcdf\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0ml\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0malpha\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mbeta\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;32m/cvmfs/sft.cern.ch/lcg/views/LCG_104a_swan/x86_64-centos7-gcc11-opt/lib/python3.9/site-packages/torch/serialization.py\u001b[0m in \u001b[0;36mload\u001b[0;34m(f, map_location, pickle_module, weights_only, **pickle_load_args)\u001b[0m\n\u001b[1;32m    789\u001b[0m         \u001b[0mpickle_load_args\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;34m'encoding'\u001b[0m\u001b[0;34m]\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m'utf-8'\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    790\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 791\u001b[0;31m     \u001b[0;32mwith\u001b[0m \u001b[0m_open_file_like\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mf\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m'rb'\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;32mas\u001b[0m \u001b[0mopened_file\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    792\u001b[0m         \u001b[0;32mif\u001b[0m \u001b[0m_is_zipfile\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mopened_file\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    793\u001b[0m             \u001b[0;31m# The zipfile reader is going to advance the current file position.\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;32m/cvmfs/sft.cern.ch/lcg/views/LCG_104a_swan/x86_64-centos7-gcc11-opt/lib/python3.9/site-packages/torch/serialization.py\u001b[0m in \u001b[0;36m_open_file_like\u001b[0;34m(name_or_buffer, mode)\u001b[0m\n\u001b[1;32m    269\u001b[0m \u001b[0;32mdef\u001b[0m \u001b[0m_open_file_like\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mname_or_buffer\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mmode\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    270\u001b[0m     \u001b[0;32mif\u001b[0m \u001b[0m_is_path\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mname_or_buffer\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 271\u001b[0;31m         \u001b[0;32mreturn\u001b[0m \u001b[0m_open_file\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mname_or_buffer\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mmode\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    272\u001b[0m     \u001b[0;32melse\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    273\u001b[0m         \u001b[0;32mif\u001b[0m \u001b[0;34m'w'\u001b[0m \u001b[0;32min\u001b[0m \u001b[0mmode\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;32m/cvmfs/sft.cern.ch/lcg/views/LCG_104a_swan/x86_64-centos7-gcc11-opt/lib/python3.9/site-packages/torch/serialization.py\u001b[0m in \u001b[0;36m__init__\u001b[0;34m(self, name, mode)\u001b[0m\n\u001b[1;32m    250\u001b[0m \u001b[0;32mclass\u001b[0m \u001b[0m_open_file\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0m_opener\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    251\u001b[0m     \u001b[0;32mdef\u001b[0m \u001b[0m__init__\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mname\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mmode\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 252\u001b[0;31m         \u001b[0msuper\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m__init__\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mopen\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mname\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mmode\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    253\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    254\u001b[0m     \u001b[0;32mdef\u001b[0m \u001b[0m__exit__\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m*\u001b[0m\u001b[0margs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;31mFileNotFoundError\u001b[0m: [Errno 2] No such file or directory: 'SIR_dnn_cdf_800K.dict'"
+      "\u001b[0;31mModuleNotFoundError\u001b[0m                       Traceback (most recent call last)",
+      "\u001b[0;32m/tmp/ipykernel_594/3662123924.py\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[1;32m      1\u001b[0m \u001b[0msys\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mpath\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mappend\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m'../models'\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m----> 2\u001b[0;31m \u001b[0;32mimport\u001b[0m \u001b[0mmodels\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mSIR_dnn_cdf_800k\u001b[0m \u001b[0;32mas\u001b[0m \u001b[0mNN\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m      3\u001b[0m \u001b[0mimportlib\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mreload\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mNN\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      4\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      5\u001b[0m \u001b[0mfold\u001b[0m  \u001b[0;34m=\u001b[0m \u001b[0;34m''\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;31mModuleNotFoundError\u001b[0m: No module named 'models.SIR_dnn_cdf_800k'"
      ]
     }
    ],
    "source": [
+    "sys.path.append('../models')\n",
+    "import models.SIR_dnn_cdf_800k as NN\n",
+    "importlib.reload(NN)\n",
     "\n",
     "fold  = ''\n",
-    "name  = 'SIR_dnn_cdf_800K'\n",
+    "name  = NN.name\n",
+    "model = NN.model\n",
     "\n",
-    "features = ['lo', 'alpha', 'beta']\n",
-    "target   = 'Zo'\n",
-    "nodes    = 25\n",
-    "\n",
-    "model = nn.Sequential(nn.Linear( len(features), nodes),\n",
-    "                      nn.ReLU(),\n",
-    "                      \n",
-    "                      nn.Linear(nodes, nodes),\n",
-    "                      nn.ReLU(),\n",
-    "                      \n",
-    "                      nn.Linear(nodes, nodes),\n",
-    "                      nn.ReLU(), \n",
-    "                      \n",
-    "                      nn.Linear(nodes, nodes),\n",
-    "                      nn.ReLU(),                    \n",
-    "                      \n",
-    "                      nn.Linear(nodes, nodes),\n",
-    "                      nn.ReLU(), \n",
-    "                      \n",
-    "                      nn.Linear(nodes, nodes),\n",
-    "                      nn.ReLU(),                    \n",
-    "                      \n",
-    "                      nn.Linear(nodes, 1), \n",
-    "                      nn.Sigmoid()) \n",
-    "\n",
-    "\n",
-    "print(features)\n",
     "print('Name: ', name)\n",
     "print('Model:')\n",
     "print(model)\n",
+    "print(NN.features)\n",
     "\n",
     "modelfile = '%s.dict' % name\n",
     "print('load:', modelfile)\n",
@@ -687,10 +582,6 @@
   }
  ],
  "metadata": {
-  "@webio": {
-   "lastCommId": null,
-   "lastKernelId": null
-  },
   "accelerator": "GPU",
   "colab": {
    "collapsed_sections": [],

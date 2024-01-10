@@ -217,35 +217,35 @@ def train(model, optimizer, dictfile, early_stopping_count,
         
         if ii % step == 0:
             
-            acc_t = validate(model, avloss, train_x[:n], train_t[:n]).item() 
-            acc_v = validate(model, avloss, valid_x[:n], valid_t[:n]).item()
+            acc_t = validate(model, avloss, train_x[:n], train_t[:n])#.item() 
+            acc_v = validate(model, avloss, valid_x[:n], valid_t[:n])#.item()
             print(f'\r{ii}',end='')
 
-            if acc_v < min_acc_v:
-                min_acc_v = acc_v
-                torch.save(model.state_dict(), dictfile)
-                stopping_count = 0
-                jjsaved = ii
-            else:
-                if stopping_count > early_stopping_count:
-                    print('\n\nstopping early!')
-                    break
+#             if acc_v < min_acc_v:
+#                 min_acc_v = acc_v
+#                 torch.save(model.state_dict(), dictfile)
+#                 stopping_count = 0
+#                 jjsaved = ii
+#             else:
+#                 if stopping_count > early_stopping_count:
+#                     print('\n\nstopping early!')
+#                     break
                     
-            if len(xx) < 1:
-                xx.append(0)
-                print("%9d %9.7f %9.7f" % (xx[-1], acc_t, acc_v))
-            elif len(xx) < 5:
-                xx.append(xx[-1] + step)
-                print("%9d %9.7f %9.7f" % (xx[-1], acc_t, acc_v))
-            else:
-                xx.append(xx[-1] + step)
-                saved = ' %9d: %9d/%10.8f/%9d' % \
-                (ii, jjsaved, min_acc_v, stopping_count)
-                print("\r%9d %9.7f %9.7f%s" % \
-                      (xx[-1], acc_t, acc_v, saved), end='')
+#             if len(xx) < 1:
+#                 xx.append(0)
+#                 print("%9d %9.7f %9.7f" % (xx[-1], acc_t, acc_v))
+#             elif len(xx) < 5:
+#                 xx.append(xx[-1] + step)
+#                 print("%9d %9.7f %9.7f" % (xx[-1], acc_t, acc_v))
+#             else:
+#                 xx.append(xx[-1] + step)
+#                 saved = ' %9d: %9d/%10.8f/%9d' % \
+#                 (ii, jjsaved, min_acc_v, stopping_count)
+#                 print("\r%9d %9.7f %9.7f%s" % \
+#                       (xx[-1], acc_t, acc_v, saved), end='')
                 
-            yy_t.append(acc_t)
-            yy_v.append(acc_v)
+#             yy_t.append(acc_t)
+#             yy_v.append(acc_v)
                 
     print()
     

@@ -53,7 +53,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 24,
+   "execution_count": 1,
    "metadata": {
     "id": "FA1Y5VCv20XZ"
    },
@@ -89,7 +89,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 25,
+   "execution_count": 2,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -119,7 +119,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 26,
+   "execution_count": 3,
    "metadata": {},
    "outputs": [
     {
@@ -170,14 +170,14 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 22,
+   "execution_count": 4,
    "metadata": {},
    "outputs": [
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "SIR_dnn_cdf_800K.py\r\n"
+      "__pycache__  SIR_dnn_cdf_100k.py  SIR_dnn_cdf_800K.py  SIR_dnn_quantile.py\r\n"
      ]
     }
    ],
@@ -187,7 +187,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 27,
+   "execution_count": 5,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -196,7 +196,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 30,
+   "execution_count": 6,
    "metadata": {},
    "outputs": [
     {
@@ -204,9 +204,9 @@
      "output_type": "stream",
      "text": [
       "\r\n",
-      "name     = 'SIR_dnn_cdf_800K'\r\n",
-      "features = ['lo', 'alpha', 'beta']\r\n",
-      "target   = 'Zo'\r\n",
+      "name     = 'SIR_dnn_quantile'\r\n",
+      "features = ['alpha', 'beta', 'tau']\r\n",
+      "target   = 'lo'\r\n",
       "nodes    = 25\r\n",
       "\r\n",
       "import torch\r\n",
@@ -230,26 +230,25 @@
       "                      nn.Linear(nodes, nodes),\r\n",
       "                      nn.ReLU(),                    \r\n",
       "                      \r\n",
-      "                      nn.Linear(nodes, 1), \r\n",
-      "                      nn.Sigmoid()) \r\n"
+      "                      nn.Linear(nodes, 1)\r\n",
+      "                     ) \r\n"
      ]
     }
    ],
    "source": [
-    "! cat ../models/SIR_dnn_cdf_800K.py"
+    "! cat ../models/SIR_dnn_quantile.py"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 34,
+   "execution_count": 10,
    "metadata": {},
    "outputs": [
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "['lo', 'alpha', 'beta']\n",
-      "Name:  SIR_dnn_cdf_800K\n",
+      "Name:  SIR_dnn_quantile\n",
       "Model:\n",
       "Sequential(\n",
       "  (0): Linear(in_features=3, out_features=25, bias=True)\n",
@@ -265,68 +264,31 @@
       "  (10): Linear(in_features=25, out_features=25, bias=True)\n",
       "  (11): ReLU()\n",
       "  (12): Linear(in_features=25, out_features=1, bias=True)\n",
-      "  (13): Sigmoid()\n",
       ")\n",
-      "load: SIR_dnn_cdf_800K.dict\n"
-     ]
-    },
-    {
-     "ename": "FileNotFoundError",
-     "evalue": "[Errno 2] No such file or directory: 'SIR_dnn_cdf_800K.dict'",
-     "output_type": "error",
-     "traceback": [
-      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
-      "\u001b[0;31mFileNotFoundError\u001b[0m                         Traceback (most recent call last)",
-      "\u001b[0;32m/tmp/ipykernel_695/835095862.py\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[1;32m     35\u001b[0m \u001b[0mmodelfile\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m'%s.dict'\u001b[0m \u001b[0;34m%\u001b[0m \u001b[0mname\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     36\u001b[0m \u001b[0mprint\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m'load:'\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mmodelfile\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 37\u001b[0;31m \u001b[0mmodel\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mload_state_dict\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mtorch\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mload\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mmodelfile\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     38\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     39\u001b[0m \u001b[0;32mdef\u001b[0m \u001b[0mcdf\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0ml\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0malpha\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mbeta\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;32m/cvmfs/sft.cern.ch/lcg/views/LCG_104a_swan/x86_64-centos7-gcc11-opt/lib/python3.9/site-packages/torch/serialization.py\u001b[0m in \u001b[0;36mload\u001b[0;34m(f, map_location, pickle_module, weights_only, **pickle_load_args)\u001b[0m\n\u001b[1;32m    789\u001b[0m         \u001b[0mpickle_load_args\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;34m'encoding'\u001b[0m\u001b[0;34m]\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m'utf-8'\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    790\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 791\u001b[0;31m     \u001b[0;32mwith\u001b[0m \u001b[0m_open_file_like\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mf\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m'rb'\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;32mas\u001b[0m \u001b[0mopened_file\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    792\u001b[0m         \u001b[0;32mif\u001b[0m \u001b[0m_is_zipfile\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mopened_file\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    793\u001b[0m             \u001b[0;31m# The zipfile reader is going to advance the current file position.\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;32m/cvmfs/sft.cern.ch/lcg/views/LCG_104a_swan/x86_64-centos7-gcc11-opt/lib/python3.9/site-packages/torch/serialization.py\u001b[0m in \u001b[0;36m_open_file_like\u001b[0;34m(name_or_buffer, mode)\u001b[0m\n\u001b[1;32m    269\u001b[0m \u001b[0;32mdef\u001b[0m \u001b[0m_open_file_like\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mname_or_buffer\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mmode\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    270\u001b[0m     \u001b[0;32mif\u001b[0m \u001b[0m_is_path\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mname_or_buffer\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 271\u001b[0;31m         \u001b[0;32mreturn\u001b[0m \u001b[0m_open_file\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mname_or_buffer\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mmode\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    272\u001b[0m     \u001b[0;32melse\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    273\u001b[0m         \u001b[0;32mif\u001b[0m \u001b[0;34m'w'\u001b[0m \u001b[0;32min\u001b[0m \u001b[0mmode\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;32m/cvmfs/sft.cern.ch/lcg/views/LCG_104a_swan/x86_64-centos7-gcc11-opt/lib/python3.9/site-packages/torch/serialization.py\u001b[0m in \u001b[0;36m__init__\u001b[0;34m(self, name, mode)\u001b[0m\n\u001b[1;32m    250\u001b[0m \u001b[0;32mclass\u001b[0m \u001b[0m_open_file\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0m_opener\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    251\u001b[0m     \u001b[0;32mdef\u001b[0m \u001b[0m__init__\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mname\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mmode\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 252\u001b[0;31m         \u001b[0msuper\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m__init__\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mopen\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mname\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mmode\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    253\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    254\u001b[0m     \u001b[0;32mdef\u001b[0m \u001b[0m__exit__\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m*\u001b[0m\u001b[0margs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
-      "\u001b[0;31mFileNotFoundError\u001b[0m: [Errno 2] No such file or directory: 'SIR_dnn_cdf_800K.dict'"
+      "['alpha', 'beta', 'tau']\n",
+      "load: SIR_dnn_quantile.dict\n"
      ]
     }
    ],
    "source": [
+    "import models.SIR_dnn_quantile as NN\n",
+    "importlib.reload(NN)\n",
     "\n",
     "fold  = ''\n",
-    "name  = 'SIR_dnn_cdf_800K'\n",
+    "name  = NN.name\n",
+    "model = NN.model\n",
     "\n",
-    "features = ['lo', 'alpha', 'beta']\n",
-    "target   = 'Zo'\n",
-    "nodes    = 25\n",
-    "\n",
-    "model = nn.Sequential(nn.Linear( len(features), nodes),\n",
-    "                      nn.ReLU(),\n",
-    "                      \n",
-    "                      nn.Linear(nodes, nodes),\n",
-    "                      nn.ReLU(),\n",
-    "                      \n",
-    "                      nn.Linear(nodes, nodes),\n",
-    "                      nn.ReLU(), \n",
-    "                      \n",
-    "                      nn.Linear(nodes, nodes),\n",
-    "                      nn.ReLU(),                    \n",
-    "                      \n",
-    "                      nn.Linear(nodes, nodes),\n",
-    "                      nn.ReLU(), \n",
-    "                      \n",
-    "                      nn.Linear(nodes, nodes),\n",
-    "                      nn.ReLU(),                    \n",
-    "                      \n",
-    "                      nn.Linear(nodes, 1), \n",
-    "                      nn.Sigmoid()) \n",
-    "\n",
-    "\n",
-    "print(features)\n",
     "print('Name: ', name)\n",
     "print('Model:')\n",
     "print(model)\n",
+    "print(NN.features)\n",
     "\n",
     "modelfile = '%s.dict' % name\n",
     "print('load:', modelfile)\n",
     "model.load_state_dict(torch.load(modelfile))\n",
     "\n",
-    "def cdf(l, alpha, beta):\n",
-    "    X = np.array([l, alpha, beta]).T\n",
+    "def quantile(alpha, beta, tau):\n",
+    "    X = np.array([alpha, beta, tau]).T\n",
     "    inputs = torch.Tensor(X)\n",
     "    # go to evaluation mode\n",
     "    model.eval()\n",
@@ -349,7 +311,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 10,
+   "execution_count": 11,
    "metadata": {},
    "outputs": [
     {
@@ -422,7 +384,7 @@
        "4  0.499624  0.354600  [0.08851203191960628, 0.02607256422172975, 0.0..."
       ]
      },
-     "execution_count": 10,
+     "execution_count": 11,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -434,7 +396,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 11,
+   "execution_count": 12,
    "metadata": {},
    "outputs": [
     {
@@ -515,7 +477,7 @@
        "4  0.499624  0.354600  [0.08851203191960628, 0.02607256422172975, 0.0..."
       ]
      },
-     "execution_count": 11,
+     "execution_count": 12,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -533,6 +495,28 @@
   },
   {
    "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {},
+   "outputs": [
+    {
+     "ename": "TypeError",
+     "evalue": "expected a sequence of integers or a single integer, got '169.32000000000002'",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mTypeError\u001b[0m                                 Traceback (most recent call last)",
+      "\u001b[0;32m/tmp/ipykernel_9076/2074474754.py\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0mquantile\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0malpha\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mbeta\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mnp\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mones\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mlen\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0malpha\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m*\u001b[0m\u001b[0;36m0.68\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
+      "\u001b[0;32m/cvmfs/sft.cern.ch/lcg/views/LCG_104a_swan/x86_64-centos7-gcc11-opt/lib/python3.9/site-packages/numpy/core/numeric.py\u001b[0m in \u001b[0;36mones\u001b[0;34m(shape, dtype, order, like)\u001b[0m\n\u001b[1;32m    202\u001b[0m         \u001b[0;32mreturn\u001b[0m \u001b[0m_ones_with_like\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mshape\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mdtype\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mdtype\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0morder\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0morder\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mlike\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mlike\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    203\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 204\u001b[0;31m     \u001b[0ma\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mempty\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mshape\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mdtype\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0morder\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    205\u001b[0m     \u001b[0mmultiarray\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mcopyto\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0ma\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;36m1\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mcasting\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;34m'unsafe'\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    206\u001b[0m     \u001b[0;32mreturn\u001b[0m \u001b[0ma\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;31mTypeError\u001b[0m: expected a sequence of integers or a single integer, got '169.32000000000002'"
+     ]
+    }
+   ],
+   "source": [
+    "quantile(alpha, beta, np.ones(len(alpha)*0.68))"
+   ]
+  },
+  {
+   "cell_type": "code",
    "execution_count": 22,
    "metadata": {},
    "outputs": [],
@@ -546,7 +530,7 @@
     "    for j, x, y in zip(range(N), alpha, beta):\n",
     "        x = np.full((K), x)\n",
     "        y = np.full((K), y)\n",
-    "        p = cdf(l[j], x, y)\n",
+    "        p = quantile(x, y, tau)\n",
     "\n",
     "        # compute coverage\n",
     "        cov[j]  = np.mean(p <= tau)\n",
