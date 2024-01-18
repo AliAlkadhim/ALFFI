@@ -20,7 +20,7 @@ print("device: %s" % device)
 def split_data(data,
                test_fraction, 
                validation_fraction):
-    
+
     # Split data into a part for training and a part for testing
     train_data, test_data = train_test_split(data, 
                                          test_size=test_fraction, 
@@ -28,8 +28,9 @@ def split_data(data,
 
     # Split the training data into a part for training (fitting) and
     # a part for validating the training.
+    v_fraction = validation_fraction * len(data) / len(train_data)
     train_data, valid_data = train_test_split(train_data, 
-                                          test_size=validation_fraction,
+                                          test_size=v_fraction,
                                           shuffle=True)
 
     # reset the indices in the dataframes and drop the old ones
@@ -145,8 +146,6 @@ def train(model, optimizer, dictfile, early_stopping_count,
           traces, 
           step=10):
     
-    #model.to(device)
-    
     train_x, train_t = split_source_target(train_data, 
                                            features, target)
     
@@ -155,6 +154,9 @@ def train(model, optimizer, dictfile, early_stopping_count,
     
     # to keep track of average losses
     xx, yy_t, yy_v = traces
+
+    # place model on current computational device
+    model = model.to(device)
     
     # save model with smallest validation loss
     # if after early_stopping_count iterations 
@@ -190,19 +192,16 @@ def train(model, optimizer, dictfile, early_stopping_count,
             # wrt. x and t
             x = torch.from_numpy(batch_x).float().to(device)
             t = torch.from_numpy(batch_t).float().to(device)
-            #x.to(device)
-            #t.to(device)
-            
+ 
         # compute the output of the model for the batch of data x
         # Note: outputs is 
         #   of shape (-1, 1), but the tensor targets, t, is
         #   of shape (-1,)
-        # In order for the tensor operations with outputs and t
-        # to work correctly, it is necessary that they have the
-        # same shape. We can do this with the reshape method.
-        outputs = model(x).reshape(t.shape)#.to(device)
-        #outputs.to(device)
-               
+        # for the tensor operations with outputs and t to work
+        # correctly, it is necessary that they be of the same
+        # shape. We can do this with the reshape method.
+        outputs = model(x).reshape(t.shape)
+        
         # compute a noisy approximation to the average loss
         empirical_risk = avloss(outputs, t, x)
         
