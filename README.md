@@ -1,9 +1,9 @@
 # ALFFI
 
-# Amortized Simulation-Based Frequentist Inference For Tractable and Intractable Likelihoods
+## Code repository for the paper "Amortized Simulation-Based Frequentist Inference For Tractable and Intractable Likelihoods", published in Machine Learning: Science and Technology, which can be accessed on https://iopscience.iop.org/article/10.1088/2632-2153/ad218e
 
 
-## This repository contains the scripts and data necessary to reproduce all the data and plots from the paper **Amortized Simulation-Based Frequentist Inference For Tractable and Intractable Likelihoods**
+This repository contains the scripts and data necessary to reproduce all the data and plots from the paper **Amortized Simulation-Based Frequentist Inference For Tractable and Intractable Likelihoods**
 
 <!--
 [arxiv:2306.07769](https://arxiv.org/pdf/2306.07769.pdf
